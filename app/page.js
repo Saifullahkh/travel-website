@@ -92,7 +92,7 @@ const Home = ({
               <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-10">
                 <a
                   href="#"
-                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-blue-600 to-green-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all transform hover:-translate-y-1"
+                  className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all transform hover:-translate-y-1"
                 >
                   {ctaPrimary}
                   <ArrowRight size={18} />

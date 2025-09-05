@@ -19,8 +19,8 @@ const destinations = [
     title: "Swiss Alps Adventure",
     description: "Breathtaking mountain vistas, charming villages, and world-class skiing in the heart of the Alps.",
     icon: <Mountain />,
-    color: "bg-green-500",
-    hoverColor: "hover:bg-green-600",
+    color: "bg-blue-500",
+    hoverColor: "hover:bg-blue-600",
     image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
     rating: 4.8,
     price: "$1,299",
@@ -30,8 +30,8 @@ const destinations = [
     title: "Santorini Escape",
     description: "White-washed buildings, crystal blue waters, and spectacular sunsets in this Greek island paradise.",
     icon: <Compass />,
-    color: "bg-purple-500",
-    hoverColor: "hover:bg-purple-600",
+    color: "bg-blue-500",
+    hoverColor: "hover:bg-blue-600",
     image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
     rating: 4.9,
     price: "$1,099",
@@ -41,8 +41,8 @@ const destinations = [
     title: "Japanese Culture Tour",
     description: "Immerse yourself in ancient traditions, modern innovations, and exquisite cuisine across Japan.",
     icon: <MapPin />,
-    color: "bg-orange-500",
-    hoverColor: "hover:bg-orange-600",
+    color: "bg-blue-500",
+    hoverColor: "hover:bg-blue-600",
     image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
     rating: 4.7,
     price: "$1,499",
@@ -62,9 +62,8 @@ const DestinationCard = ({ title, description, icon, color, hoverColor, image, r
 
   return (
     <div 
-      className={`relative flex flex-col p-0 text-center rounded-xl shadow-lg transition-all duration-300 transform ${isHovered ? 'scale-105 shadow-xl -translate-y-2' : ''} bg-white dark:bg-gray-800 overflow-hidden group`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className={`relative flex flex-col p-0 text-center rounded-xl shadow-lg  bg-white dark:bg-gray-800 overflow-hidden group`}
+      
       style={{ transitionDelay: `${index * 100}ms` }}
     >
       {/* Destination Image */}
@@ -73,6 +72,8 @@ const DestinationCard = ({ title, description, icon, color, hoverColor, image, r
           src={image} 
           alt={title}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
         />
         <div className="absolute top-4 right-4 bg-white rounded-full px-2 py-1 flex items-center text-sm font-bold">
           <Star size={14} className="text-yellow-400 fill-yellow-400 mr-1" />
@@ -82,7 +83,7 @@ const DestinationCard = ({ title, description, icon, color, hoverColor, image, r
       
       {/* Content */}
       <div className="p-6">
-        <div className={`w-16 h-16 text-xl flex items-center justify-center rounded-full ${color} text-white mb-4 mx-auto relative z-10 transition-all duration-300 ${isHovered ? 'rotate-12 scale-110' : ''}`}>
+        <div className={`w-16 h-16 text-xl flex items-center justify-center rounded-full ${color} text-white mb-4 mx-auto relative z-10 `}>
           {icon}
         </div>
         
