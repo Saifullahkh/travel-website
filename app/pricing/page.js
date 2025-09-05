@@ -85,7 +85,7 @@ export default function TravelPricing({
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto ">
           {plans.map((plan) => {
             const getColorClasses = (color) => {
               switch (color) {
@@ -179,8 +179,8 @@ export default function TravelPricing({
                   ))}
                 </ul>
 
-                <button
-                  className={`group w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center ${
+               <button
+                  className={` group w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center mt-auto ${
                     plan.isPopular
                       ? `bg-gradient-to-r ${colorClasses.gradient} ${colorClasses.hover} text-white shadow-md hover:shadow-lg`
                       : "border border-gray-300 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"

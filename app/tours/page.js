@@ -58,7 +58,7 @@ export default function ToursComponent({
                   key={index} 
                   className={`flex gap-6 items-start p-6 rounded-2xl transition-all duration-300 cursor-pointer
                     ${hoveredStep === index 
-                      ? 'bg-white dark:bg-gray-800 shadow-lg border border-blue-100 dark:border-blue-900/50 transform -translate-y-1' 
+                      ? 'bg-white dark:bg-gray-800   dark:border-blue-900/50 ' 
                       : 'bg-white/70 dark:bg-gray-800/50 shadow-md'}`}
                   onMouseEnter={() => setHoveredStep(index)}
                   onMouseLeave={() => setHoveredStep(null)}
@@ -89,7 +89,7 @@ export default function ToursComponent({
             {/* CTA Button */}
             <button
               onClick={onCtaClick}
-              className="group inline-flex items-center justify-center px-8 py-4 rounded-xl font-medium bg-gradient-to-r from-blue-600 to-green-600 text-white hover:from-blue-700 hover:to-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="group inline-flex items-center justify-center px-8 py-4 rounded-xl font-medium bg-blue-500 text-white hover:bg-blue-600 transition-all duration-300 transform hover:scale-101 shadow-lg hover:shadow-xl"
             >
               {ctaText}
               <ArrowRight size={20} className="ml-2 transition-transform group-hover:translate-x-1" />
