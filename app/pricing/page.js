@@ -165,7 +165,7 @@ export default function TravelPricing({
                   {plan.description}
                 </p>
 
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-4 mb-20">
                   {plan.features.map((feature, i) => (
                     <li key={i} className="flex items-start">
                       <CheckCircle
@@ -180,7 +180,7 @@ export default function TravelPricing({
                 </ul>
 
                <button
-                  className={` group w-full py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center mt-auto ${
+                  className={`absolute bottom-6 group w-3/4 py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center mt-auto ${
                     plan.isPopular
                       ? `bg-gradient-to-r ${colorClasses.gradient} ${colorClasses.hover} text-white shadow-md hover:shadow-lg`
                       : "border border-gray-300 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
