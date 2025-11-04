@@ -133,7 +133,7 @@ export default function TravelPricing({
                 {plan.isPopular && (
                   <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                     <span
-                      className={`px-4 py-1 text-xs font-bold bg-gradient-to-r ${colorClasses.gradient} text-white rounded-full shadow-md`}
+                      className={`px-4 py-1 text-xs font-bold bg-blue-600 text-white rounded-full shadow-md`}
                     >
                       MOST POPULAR
                     </span>
@@ -182,7 +182,7 @@ export default function TravelPricing({
                <button
                   className={`absolute bottom-6 group w-3/4 py-3 px-6 rounded-lg font-medium transition-all duration-300 flex items-center justify-center mt-auto ${
                     plan.isPopular
-                      ? `bg-gradient-to-r ${colorClasses.gradient} ${colorClasses.hover} text-white shadow-md hover:shadow-lg`
+                      ? ` bg-blue-600 border border-blue-600 text-white shadow-md hover:shadow-lg`
                       : "border border-gray-300 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
                 >
