@@ -145,7 +145,7 @@ export default function TravelFooter({
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4">
           <div className="text-center sm:text-left">
             <span className="font-semibold text-gray-700 dark:text-gray-300">TravelX</span>
-            <span className="text-gray-500 dark:text-gray-400 ml-1">&copy; {new Date().getFullYear()} All rights reserved.</span>
+            <span className="text-gray-500 dark:text-gray-400 ml-1">&copy; 2025 All rights reserved.</span>
           </div>
 
           <div className="flex items-center gap-1 text-center sm:text-right text-gray-500 dark:text-gray-400">
