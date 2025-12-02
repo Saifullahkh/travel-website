@@ -131,29 +131,24 @@ export default function TravelFooter({
       id="footer"
       className={`w-full bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 ${classname || ""}`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Main footer content */}
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-8 mb-10">
+        <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-8 mb-5">
           <LeftSection />
           <RightSection />
         </div>
 
         {/* Separator */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-4" />
 
         {/* Bottom section */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-4">
-          <div className="text-center sm:text-left">
+        <div className="">
+          <div className="text-center ">
             <span className="font-semibold text-gray-700 dark:text-gray-300">TravelX</span>
             <span className="text-gray-500 dark:text-gray-400 ml-1">&copy; 2025 All rights reserved.</span>
           </div>
 
-          <div className="flex items-center gap-1 text-center sm:text-right text-gray-500 dark:text-gray-400">
-            <span>Made with</span>
-            <Heart className="text-red-500 h-4 w-4 fill-current mx-1" />
-            <span>by</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-300 ml-1">@travelx</span>
-          </div>
+         
         </div>
       </div>
     </footer>
