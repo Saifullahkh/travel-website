@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X, Plane } from "lucide-react";
+import { Compass, Menu, X, Phone } from "lucide-react";
 import Link from "next/link";
 
 const Header = ({
@@ -13,155 +13,155 @@ const Header = ({
     { name: "About", href: "#about" },
     { name: "Packages", href: "#pricing" },
   ],
-  authLinks = {
-    login: { text: "Login", href: "#" },
-  },
-  className = "",
   brandName = "TravelX",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
 
-  // Scroll header effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+
+      const sections = navLinks.map((link) => link.href.substring(1));
+      const currentScroll = window.scrollY + 120;
+
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (currentScroll >= top && currentScroll < top + height) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [navLinks]);
 
-  // Disable body scroll when drawer is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-    return () => (document.body.style.overflow = "");
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   const smoothScroll = (href) => {
     setIsOpen(false);
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (href.startsWith("#")) {
+      const target = document.querySelector(href);
+      if (target) {
+        const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({
+          top: offsetTop,
+          behavior: "smooth",
+        });
+      }
     }
   };
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 py-3 px-4 md:px-8 flex items-center justify-between transition-all duration-300 ${
-        scrolled
-          ? "bg-white/95 backdrop-blur-md shadow-lg py-2"
-          : "bg-transparent"
-      } ${className}`}
-    >
-      {/* Logo + Brand */}
-      <Link
-        href="#home"
-        className="flex items-center gap-2 z-10"
-        onClick={(e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }}
-      >
-        <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-          <Plane size={24} className="text-white transform -rotate-45" />
-        </div>
-        <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-          {brandName}
-        </span>
-      </Link>
-
-      {/* Desktop Navigation */}
-      <div className="hidden md:flex items-center space-x-1 text-sm font-medium">
-        {navLinks.map((link) => (
-          <button
-            key={link.name}
-            onClick={() => smoothScroll(link.href)}
-            className="px-4 py-2 text-gray-700 hover:text-blue-600 transition-colors relative group font-medium"
-          >
-            {link.name}
-            <span className="absolute bottom-0 left-1/4 w-1/2 h-0.5 bg-gradient-to-r from-blue-600 to-green-600 scale-x-0 group-hover:scale-x-100 transition-transform origin-center"></span>
-          </button>
-        ))}
-      </div>
-
-      {/* Desktop Auth */}
-      <div className="hidden md:flex items-center space-x-3">
+    <header className="fixed top-0 left-0 right-0 z-50 glass-header transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        {/* Brand Logo */}
         <Link
-          href={authLinks.login.href}
-          className="px-5 py-2 text-gray-700 hover:text-blue-600 transition-colors font-medium border border-gray-300 rounded-lg hover:border-blue-300"
+          href="#home"
+          className="flex items-center gap-2.5 group"
+          onClick={(e) => {
+            e.preventDefault();
+            smoothScroll("#home");
+          }}
         >
-          {authLinks.login.text}
+          <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center text-slate-950 font-bold shadow-sm">
+            <Compass size={20} />
+          </div>
+          <span className="text-2xl font-bold tracking-tight text-white">
+            {brandName}
+          </span>
         </Link>
-      </div>
 
-      {/* Mobile Menu Toggle */}
-      <button
-        className="md:hidden p-2 rounded-md text-gray-700 hover:bg-blue-50 z-50 transition-colors"
-        onClick={() => setIsOpen(!isOpen)}
-        aria-label="Toggle menu"
-      >
-        {isOpen ? <X size={24} /> : <Menu size={24} />}
-      </button>
-
-      {/* Background Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300 z-40"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
-
-      {/* Drawer */}
-      <div
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
-          isOpen ? "translate-x-0" : "translate-x-full"
-        }`}
-        style={{ minHeight: "86vh" }}
-      >
-        {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-800">Menu</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            aria-label="Close menu"
-            className="p-2 rounded-md hover:bg-gray-100 transition"
-          >
-            <X size={22} className="text-gray-600" />
-          </button>
-        </div>
-
-        {/* Drawer Content */}
-        <div className="bg-white flex flex-col h-full pt-6 px-6">
-          <div className="flex-1 space-y-2 overflow-y-auto">
-            {navLinks.map((link) => (
+        {/* Desktop Navigation Links */}
+        <nav aria-label="Desktop Navigation" className="hidden md:flex items-center space-x-8">
+          {navLinks.map((link) => {
+            const sectionId = link.href.substring(1);
+            const isActive = activeSection === sectionId;
+            return (
               <button
                 key={link.name}
-                onClick={() => {
-                  smoothScroll(link.href);
-                  setIsOpen(false);
-                }}
-                className="block w-full text-left py-3 px-4 text-gray-700 hover:text-blue-600 hover:bg-blue-50 transition-colors rounded-lg text-base font-medium"
+                onClick={() => smoothScroll(link.href)}
+                className={`text-sm font-medium transition-colors py-1 relative ${isActive
+                    ? "text-emerald-400 font-semibold"
+                    : "text-slate-300 hover:text-white"
+                  }`}
               >
                 {link.name}
+                {isActive && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-emerald-400 rounded-full"></span>
+                )}
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </nav>
 
-          {/* Auth Section */}
-          <div className="pt-4 border-t border-gray-200">
-            <Link
-              href={authLinks.login.href}
-              className="w-full text-center px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-blue-50 transition font-medium"
-              onClick={() => setIsOpen(false)}
+        {/* Action Button */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="tel:+923359199919"
+            className="text-xs text-slate-300 hover:text-emerald-400 font-medium flex items-center gap-1.5 transition-colors"
+          >
+            <Phone size={14} className="text-emerald-400" />
+            <span>+92 335 9199919</span>
+          </a>
+
+          <button
+            onClick={() => smoothScroll("#pricing")}
+            className="px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs uppercase tracking-wider transition-colors shadow-sm"
+          >
+            Book Now
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden p-2 rounded-lg text-slate-300 hover:text-white"
+          onClick={() => setIsOpen(!isOpen)}
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      {/* Mobile Drawer */}
+      {isOpen && (
+        <div className="md:hidden bg-slate-900 border-b border-slate-800 px-4 py-6 space-y-3">
+          {navLinks.map((link) => (
+            <button
+              key={link.name}
+              onClick={() => smoothScroll(link.href)}
+              className="block w-full text-left px-4 py-2.5 rounded-lg text-sm text-slate-300 hover:bg-slate-800 hover:text-white font-medium"
             >
-              {authLinks.login.text}
-            </Link>
+              {link.name}
+            </button>
+          ))}
+          <div className="pt-4 border-t border-slate-800 flex flex-col gap-3">
+            <button
+              onClick={() => smoothScroll("#pricing")}
+              className="w-full py-3 rounded-lg bg-emerald-500 text-slate-950 font-bold text-sm text-center"
+            >
+              Book Now
+            </button>
           </div>
         </div>
-      </div>
-    </nav>
+      )}
+    </header>
   );
 };
 

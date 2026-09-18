@@ -1,203 +1,255 @@
 "use client";
 
-import { MapPin, Compass, Globe, Mountain, Camera, ArrowRight, Star, Users, Award, Clock } from "lucide-react";
-import { useState, useEffect } from "react";
+import { MapPin, Compass, Globe, Mountain, ArrowRight, Star, Users, Award, Clock, Heart, Search } from "lucide-react";
+import { useState } from "react";
 
-const destinations = [
+const ALL_DESTINATIONS = [
   {
-    title: "Bali Paradise",
-    description: "Experience the perfect blend of stunning beaches, vibrant culture, and spiritual retreats in the Island of Gods.",
-    icon: <Globe />,
-    color: "bg-blue-500",
-    hoverColor: "hover:bg-blue-600",
-    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+    id: 1,
+    category: "beach",
+    title: "Bali Tropical Sanctuary",
+    location: "Indonesia",
+    description: "Vibrant volcanic beaches, sacred cliffside temples, and private villa retreats surrounded by lush rainforests.",
+    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
+    reviews: 320,
     price: "$899",
-    duration: "7 days"
+    duration: "7 Days / 6 Nights",
+    badge: "Popular"
   },
   {
-    title: "Swiss Alps Adventure",
-    description: "Breathtaking mountain vistas, charming villages, and world-class skiing in the heart of the Alps.",
-    icon: <Mountain />,
-    color: "bg-blue-500",
-    hoverColor: "hover:bg-blue-600",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-    rating: 4.8,
-    price: "$1,299",
-    duration: "10 days"
-  },
-  {
-    title: "Santorini Escape",
-    description: "White-washed buildings, crystal blue waters, and spectacular sunsets in this Greek island paradise.",
-    icon: <Compass />,
-    color: "bg-blue-500",
-    hoverColor: "hover:bg-blue-600",
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+    id: 2,
+    category: "mountain",
+    title: "Swiss Alps Pinnacle Escape",
+    location: "Switzerland",
+    description: "Breathtaking snow-capped peaks, luxury chalets, private skiing, and scenic glacier express train rides.",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
-    price: "$1,099",
-    duration: "8 days"
+    reviews: 450,
+    price: "$1,399",
+    duration: "10 Days / 9 Nights",
+    badge: "Featured"
   },
   {
-    title: "Japanese Culture Tour",
-    description: "Immerse yourself in ancient traditions, modern innovations, and exquisite cuisine across Japan.",
-    icon: <MapPin />,
-    color: "bg-blue-500",
-    hoverColor: "hover:bg-blue-600",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
-    rating: 4.7,
-    price: "$1,499",
-    duration: "12 days"
+    id: 3,
+    category: "beach",
+    title: "Santorini Sunset Horizon",
+    location: "Greece",
+    description: "Iconic blue-domed architecture, private catamaran cruises, and romantic cliffside dining.",
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    rating: 4.8,
+    reviews: 290,
+    price: "$1,199",
+    duration: "8 Days / 7 Nights",
+    badge: "Honeymoon"
   },
-];
-
-const stats = [
-  { value: "50+", label: "Destinations", icon: <Globe size={20} /> },
-  { value: "10K+", label: "Happy Travelers", icon: <Users size={20} /> },
-  { value: "24/7", label: "Support", icon: <Clock size={20} /> },
-  { value: "4.8/5", label: "Rating", icon: <Award size={20} /> },
-];
-
-const DestinationCard = ({ title, description, icon, color, hoverColor, image, rating, price, duration, index }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <div 
-      className={`relative flex flex-col p-0 text-center rounded-xl shadow-lg  bg-white dark:bg-gray-800 overflow-hidden group`}
-      
-      style={{ transitionDelay: `${index * 100}ms` }}
-    >
-      {/* Destination Image */}
-      <div className="h-48 overflow-hidden">
-        <img 
-          src={image} 
-          alt={title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-        />
-        <div className="absolute top-4 right-4 bg-white rounded-full px-2 py-1 flex items-center text-sm font-bold">
-          <Star size={14} className="text-yellow-400 fill-yellow-400 mr-1" />
-          {rating}
-        </div>
-      </div>
-      
-      {/* Content */}
-      <div className="p-6">
-        <div className={`w-16 h-16 text-xl flex items-center justify-center rounded-full ${color} text-white mb-4 mx-auto relative z-10 `}>
-          {icon}
-        </div>
-        
-        <h3 className="text-xl font-bold mb-2 relative z-10 text-gray-800 dark:text-white">{title}</h3>
-        <p className="opacity-80 mb-4 relative z-10 text-gray-600 dark:text-gray-300 text-sm h-12 overflow-hidden">
-          {description}
-        </p>
-        
-        <div className="flex justify-between items-center mb-4">
-          <div className="text-lg font-bold text-blue-600 dark:text-blue-400">{price}</div>
-          <div className="text-sm text-gray-500">{duration}</div>
-        </div>
-        
-        <button className={`w-full flex items-center justify-center text-sm font-medium py-3 px-4 rounded-lg ${color} text-white hover:shadow-md transition-all ${hoverColor}`}>
-          Explore Destination
-          <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
-        </button>
-      </div>
-      
-      {/* Decorative element */}
-      <div className={`absolute -bottom-4 -right-4 w-20 h-20 rounded-full ${color} opacity-5 group-hover:opacity-10 transition-opacity duration-300`}></div>
-    </div>
-  );
-};
-
-function DestinationSection({
-  featureBadge = { text: "Popular Destinations", icon: <Compass size={16} /> },
-  mainHeading = { text: "Where Every Journey is Uniquely Yours" },
-  subHeading = {
-    text: "Explore our handpicked destinations offering unforgettable experiences and breathtaking landscapes around the world",
+  {
+    id: 4,
+    category: "culture",
+    title: "Kyoto Ancient Blossom",
+    location: "Japan",
+    description: "Immerse in serene bamboo groves, traditional tea ceremonies, historic shrines, and world-class dining.",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    rating: 4.9,
+    reviews: 510,
+    price: "$1,599",
+    duration: "12 Days / 11 Nights",
+    badge: "Culture"
   },
-  destinationsArray = destinations,
-}) {
-  const [isVisible, setIsVisible] = useState(false);
-  
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  let lgGridColsClass = "lg:grid-cols-4";
-  if (destinationsArray.length === 1) {
-    lgGridColsClass = "lg:grid-cols-1";
-  } else if (destinationsArray.length === 2) {
-    lgGridColsClass = "lg:grid-cols-2";
-  } else if (destinationsArray.length === 3) {
-    lgGridColsClass = "lg:grid-cols-3";
+  {
+    id: 5,
+    category: "beach",
+    title: "Maldives Private Atoll",
+    location: "Maldives",
+    description: "Glass-floor overwater bungalows, crystal lagoon coral reefs, and private butler service in paradise.",
+    image: "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    rating: 5.0,
+    reviews: 620,
+    price: "$2,199",
+    duration: "6 Days / 5 Nights",
+    badge: "Luxury"
+  },
+  {
+    id: 6,
+    category: "mountain",
+    title: "Patagonia Wild Frontier",
+    location: "Argentina & Chile",
+    description: "Dramatic granite peaks, turquoise glacial lakes, and guided trekking across unblemished wilderness.",
+    image: "https://images.unsplash.com/photo-1527004013197-933c4bb611b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    rating: 4.8,
+    reviews: 180,
+    price: "$1,799",
+    duration: "11 Days / 10 Nights",
+    badge: "Adventure"
   }
+];
+
+const STATS = [
+  { value: "100+", label: "World Destinations", icon: <Globe size={20} className="text-emerald-400" /> },
+  { value: "25K+", label: "Delighted Travelers", icon: <Users size={20} className="text-emerald-400" /> },
+  { value: "99.4%", label: "Satisfaction Rate", icon: <Award size={20} className="text-emerald-400" /> },
+  { value: "24/7", label: "Global Support", icon: <Clock size={20} className="text-emerald-400" /> },
+];
+
+export default function DestinationSection() {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [favorites, setFavorites] = useState({});
+
+  const toggleFavorite = (id) => {
+    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const filteredDestinations = ALL_DESTINATIONS.filter((item) => {
+    const matchesCategory = activeCategory === "all" || item.category === activeCategory;
+    const matchesSearch =
+      item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.location.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <div id="destinations" className="py-16 md:py-24 bg-gradient-to-b from-blue-50/50 to-white dark:from-gray-900 dark:to-gray-800 relative overflow-hidden">
+    <section id="destinations" className="py-20 md:py-28 bg-slate-900 border-t border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header Title */}
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs font-semibold text-emerald-400 mb-4">
+            <Compass size={14} />
+            <span>Top Destinations</span>
+          </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Badge */}
-        <div className="flex justify-center items-center mb-8">
-          <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-100 shadow-sm">
-            {featureBadge.icon}
-            <span className="ml-2">{featureBadge.text}</span>
-          </span>
-        </div>
-
-        {/* Headings */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl  font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-400 dark:to-green-400">
-            {mainHeading.text}
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            Explore Popular Destinations
           </h2>
-          <p className="mt-4 text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-            {subHeading.text}
+
+          <p className="text-slate-400 text-sm sm:text-base font-normal">
+            Handpicked travel packages offering unforgettable experiences across the world.
           </p>
         </div>
 
-        {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          {stats.map((stat, index) => (
-            <div 
-              key={index} 
-              className="bg-white dark:bg-gray-800 rounded-xl p-6 text-center shadow-md border border-gray-100 dark:border-gray-700 transition-all hover:shadow-lg"
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+          {STATS.map((stat, idx) => (
+            <div
+              key={idx}
+              className="bg-slate-800/80 p-5 rounded-xl border border-slate-700 text-center flex flex-col items-center"
             >
-              <div className="flex justify-center mb-3">
-                <div className="p-2 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400">
-                  {stat.icon}
-                </div>
+              <div className="w-10 h-10 rounded-lg bg-slate-900 flex items-center justify-center mb-2">
+                {stat.icon}
               </div>
-              <div className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">{stat.value}</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">{stat.label}</div>
+              <div className="text-2xl font-bold text-white">{stat.value}</div>
+              <div className="text-xs text-slate-400 font-medium mt-0.5">{stat.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Destinations Grid */}
-        <div className={`grid grid-cols-1 md:grid-cols-2 ${lgGridColsClass} gap-8`}>
-          {destinationsArray.map((destination, index) => (
-            <div 
-              key={index} 
-              className={`transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${index * 150}ms` }}
+        {/* Filter Controls */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              { id: "all", label: "All Destinations" },
+              { id: "beach", label: "Beaches & Islands" },
+              { id: "mountain", label: "Mountains" },
+              { id: "culture", label: "Culture" },
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveCategory(tab.id)}
+                className={`px-4 py-2 rounded-lg text-xs font-semibold transition-colors ${activeCategory === tab.id
+                    ? "bg-emerald-500 text-slate-950 font-bold"
+                    : "bg-slate-800 text-slate-300 hover:text-white"
+                  }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Box */}
+          <div className="relative w-full md:w-64">
+            <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search destination..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-emerald-500"
+            />
+          </div>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredDestinations.map((destination) => (
+            <div
+              key={destination.id}
+              className="bg-slate-800/90 rounded-2xl overflow-hidden border border-slate-700 flex flex-col justify-between hover:border-emerald-500/50 transition-colors group"
             >
-              <DestinationCard
-                title={destination.title}
-                description={destination.description}
-                icon={destination.icon}
-                color={destination.color}
-                hoverColor={destination.hoverColor}
-                image={destination.image}
-                rating={destination.rating}
-                price={destination.price}
-                duration={destination.duration}
-                index={index}
-              />
+              <div className="relative h-56 overflow-hidden">
+                <img
+                  src={destination.image}
+                  alt={destination.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute top-3 left-3 bg-slate-950/80 px-2.5 py-1 rounded text-[10px] font-bold uppercase tracking-wider text-emerald-400 border border-slate-700">
+                  {destination.badge}
+                </div>
+                <button
+                  onClick={() => toggleFavorite(destination.id)}
+                  className="absolute top-3 right-3 p-2 rounded-full bg-slate-950/70 text-white hover:text-emerald-400 border border-slate-700"
+                >
+                  <Heart
+                    size={16}
+                    className={favorites[destination.id] ? "fill-emerald-400 text-emerald-400" : ""}
+                  />
+                </button>
+                <div className="absolute bottom-3 left-3 flex items-center gap-1 bg-slate-950/80 px-2.5 py-1 rounded text-xs font-bold text-white border border-slate-700">
+                  <Star size={12} className="text-amber-400 fill-amber-400" />
+                  <span>{destination.rating}</span>
+                  <span className="text-slate-400 font-normal">({destination.reviews})</span>
+                </div>
+              </div>
+
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 text-xs font-medium text-emerald-400 mb-2">
+                    <MapPin size={14} />
+                    <span>{destination.location}</span>
+                    <span className="text-slate-600">•</span>
+                    <span className="text-slate-400">{destination.duration}</span>
+                  </div>
+
+                  <h3 className="text-lg font-bold text-white mb-2">
+                    {destination.title}
+                  </h3>
+
+                  <p className="text-slate-400 text-xs leading-relaxed mb-4 line-clamp-3">
+                    {destination.description}
+                  </p>
+                </div>
+
+                <div className="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] uppercase text-slate-400 block font-medium">Starting From</span>
+                    <div className="text-xl font-bold text-white">
+                      {destination.price}
+                      <span className="text-xs text-slate-400 font-normal"> / guest</span>
+                    </div>
+                  </div>
+
+                  <a
+                    href="#pricing"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-xs font-bold transition-colors"
+                  >
+                    <span>Book</span>
+                    <ArrowRight size={14} />
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
-
-export default DestinationSection;

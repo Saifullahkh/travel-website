@@ -1,154 +1,94 @@
 "use client";
+
 import React from "react";
-import { Heart, MapPin, Phone, Mail, Plane } from "lucide-react";
-import {
-  FaInstagram,
-  FaYoutube,
-  FaFacebook,
-  FaTwitter,
+import { Compass, Phone, Mail, MapPin } from "lucide-react";
+import { FaInstagram, FaYoutube, FaFacebook, FaTwitter } from "react-icons/fa";
 
-} from "react-icons/fa";
-
-const DEFAULT_SOCIAL_LINKS = [
+const SOCIAL_LINKS = [
   { href: "#", icon: FaInstagram, label: "Instagram" },
   { href: "#", icon: FaFacebook, label: "Facebook" },
   { href: "#", icon: FaTwitter, label: "Twitter" },
   { href: "#", icon: FaYoutube, label: "YouTube" },
 ];
 
-const DEFAULT_FOOTER_NAVIGATION = {
-  "Destinations": [
-    { label: "Beach Getaways", href: "#" },
-    { label: "Mountain Adventures", href: "#" },
-    { label: "City Breaks", href: "#" },
-    { label: "Cultural Tours", href: "#" },
-  ],
-  "Services": [
-    { label: "Flight Booking", href: "#" },
-    { label: "Hotel Reservations", href: "#" },
-    { label: "Tour Packages", href: "#" },
-    { label: "Travel Insurance", href: "#" },
-  ],
-  "Support": [
-    { label: "Help Center", href: "#" },
-    { label: "Travel Guides", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Terms & Conditions", href: "#" },
-  ]
-};
-
-export default function TravelFooter({
-  socialLinks = DEFAULT_SOCIAL_LINKS,
-  footerNavigation = DEFAULT_FOOTER_NAVIGATION,
-  classname,
-}) {
-  
-
-  function LeftSection() {
-    return (
-      <div className="w-full lg:w-1/3 mb-8 lg:mb-0">
-        <div className="mb-6">
-          <div className="flex items-center gap-3 mb-4">
-           <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-green-600 rounded-lg flex items-center justify-center">
-              <Plane size={24} className="text-white transform -rotate-45" />
-            </div>
-            <div className="font-bold text-2xl bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-              TravelX
-            </div>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300 mb-6 text-sm leading-relaxed max-w-md">
-            Explore the world with TravelX. Your adventure starts here.
-          </p>
-          
-          {/* Contact Info */}
-          <div className="space-y-3 mb-6">
-            <div className="flex items-center text-gray-600 dark:text-gray-300">
-              <Phone className="h-4 w-4 mr-3 text-blue-500" />
-              <span className="text-sm"> phone: +92335 9199919</span>
-            </div>
-            <div className="flex items-center text-gray-600 dark:text-gray-300">
-              <Mail className="h-4 w-4 mr-3 text-blue-500" />
-              <span className="text-sm"> email: atifullahkhan47@gmail.com</span>
-            </div>
-            <div className="flex items-start text-gray-600 dark:text-gray-300">
-              <MapPin className="h-4 w-4 mr-3 mt-0.5 text-blue-500 flex-shrink-0" />
-              <span className="text-sm"> address: 123 Satellite Town, Rawalpindi, PC 12345  </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Social Links */}
-        <div className="mb-6">
-          <h4 className="font-semibold text-gray-800 dark:text-white mb-4">Follow Our Journey</h4>
-          <div className="flex items-center space-x-3">
-            {socialLinks.map((link, index) => (
-              <a
-                key={index}
-                href={link.href}
-                className="h-10 w-10 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors duration-200 group"
-                aria-label={link.label}
-              >
-                <link.icon className="h-5 w-5 text-gray-600 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  function RightSection() {
-    return (
-      <div className="w-full lg:w-1/2">
-        <div className="grid md:grid-cols-3 grid-cols-1 gap-8">
-          {Object.entries(footerNavigation).map(([title, links]) => (
-            <div key={title} className="min-w-0">
-              <div className="mb-4 font-semibold text-gray-800 dark:text-white text-md">
-                {title}
-              </div>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 text-sm transition-all duration-200 flex items-center group"
-                    >
-                      <span className="w-1 h-1 bg-gray-300 rounded-full mr-3 group-hover:bg-blue-600 group-hover:w-2 transition-all duration-200"></span>
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
+export default function TravelFooter() {
+  const smoothScroll = (href) => {
+    if (href.startsWith("#")) {
+      const el = document.querySelector(href);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.pageYOffset - 80;
+        window.scrollTo({ top, behavior: "smooth" });
+      }
+    }
+  };
 
   return (
-    <footer
-      id="footer"
-      className={`w-full bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 border-t border-gray-200 dark:border-gray-700 ${classname || ""}`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Main footer content */}
-        <div className="flex flex-col lg:flex-row items-start justify-between gap-10 lg:gap-8 mb-5">
-          <LeftSection />
-          <RightSection />
-        </div>
+    <footer id="footer" className="w-full bg-slate-950 text-slate-400 border-t border-slate-800 pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-12 border-b border-slate-800">
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center text-slate-950 font-bold">
+                <Compass size={18} />
+              </div>
+              <span className="text-xl font-bold text-white">TravelX</span>
+            </div>
 
-        {/* Separator */}
-        <div className="h-px bg-gradient-to-r from-transparent via-gray-300 dark:via-gray-600 to-transparent my-4" />
+            <p className="text-xs text-slate-400 leading-relaxed mb-6 max-w-sm">
+              Handcrafted travel experiences, luxury stays, and private expeditions across the world&apos;s finest destinations.
+            </p>
 
-        {/* Bottom section */}
-        <div className="">
-          <div className="text-center ">
-            <span className="font-semibold text-gray-700 dark:text-gray-300">TravelX</span>
-            <span className="text-gray-500 dark:text-gray-400 ml-1">&copy; 2025 All rights reserved.</span>
+            <div className="flex items-center gap-3">
+              {SOCIAL_LINKS.map((item, idx) => {
+                const IconComponent = item.icon;
+                return (
+                  <a
+                    key={idx}
+                    href={item.href}
+                    aria-label={item.label}
+                    className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-emerald-400 hover:border-emerald-500 transition-colors"
+                  >
+                    <IconComponent size={14} />
+                  </a>
+                );
+              })}
+            </div>
           </div>
 
-         
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-6">
+            <div>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Destinations</h4>
+              <ul className="space-y-2 text-xs">
+                <li><button onClick={() => smoothScroll("#destinations")} className="hover:text-emerald-400 transition-colors">Bali, Indonesia</button></li>
+                <li><button onClick={() => smoothScroll("#destinations")} className="hover:text-emerald-400 transition-colors">Swiss Alps</button></li>
+                <li><button onClick={() => smoothScroll("#destinations")} className="hover:text-emerald-400 transition-colors">Santorini, Greece</button></li>
+                <li><button onClick={() => smoothScroll("#destinations")} className="hover:text-emerald-400 transition-colors">Kyoto, Japan</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Company</h4>
+              <ul className="space-y-2 text-xs">
+                <li><button onClick={() => smoothScroll("#about")} className="hover:text-emerald-400 transition-colors">About Us</button></li>
+                <li><button onClick={() => smoothScroll("#tours")} className="hover:text-emerald-400 transition-colors">How It Works</button></li>
+                <li><button onClick={() => smoothScroll("#experiences")} className="hover:text-emerald-400 transition-colors">Reviews</button></li>
+                <li><button onClick={() => smoothScroll("#pricing")} className="hover:text-emerald-400 transition-colors">Packages</button></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4">Contact</h4>
+              <ul className="space-y-2 text-xs">
+                <li className="flex items-center gap-2"><Phone size={12} className="text-emerald-400" /> +92 335 9199919</li>
+                <li className="flex items-center gap-2"><Mail size={12} className="text-emerald-400" /> atifullahkhan47@gmail.com</li>
+                <li className="flex items-center gap-2"><MapPin size={12} className="text-emerald-400" /> Rawalpindi, Pakistan</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div className="pt-6 text-center text-xs text-slate-500">
+          &copy; {new Date().getFullYear()} TravelX Inc. All rights reserved.
         </div>
       </div>
     </footer>

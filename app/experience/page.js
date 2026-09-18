@@ -1,134 +1,116 @@
 "use client";
 
-import { Star, Quote, ChevronLeft, ChevronRight, MapPin, Globe } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Star, MapPin, Globe, CheckCircle2 } from "lucide-react";
 
-function ExperienceCard({ rating, content, author, destination, image }) {
-  return (
-    <div className="p-6 rounded-xl shadow-md border border-gray-100 bg-white dark:bg-gray-800 dark:border-gray-700 transition-all duration-300 hover:shadow-lg">
-      {/* Destination Image */}
-      {image && (
-        <div className="mb-4 -mx-6 -mt-6">
-          <img 
-            src={image} 
-            alt={destination} 
-            className="w-full h-40 object-cover"
-          />
-        </div>
-      )}
-      
-      {/* Destination Tag */}
-      <div className="flex items-center mb-3 text-blue-600 dark:text-blue-400 text-sm">
-        <MapPin size={14} className="mr-1" />
-        <span>{destination}</span>
-      </div>
-      
-      {/* Rating */}
-      {rating && (
-        <div className="flex mb-3">
-          {[...Array(5)].map((_, i) => (
-            <Star
-              key={i}
-              className={`w-4 h-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Content */}
-      <p className="mb-4 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
-        {content}
-      </p>
-
-      {/* Author */}
-      {author && (
-        <div className="flex items-center pt-3 border-t border-gray-100 dark:border-gray-700">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-green-500 flex items-center justify-center text-white font-bold text-sm">
-            {author.charAt(0)}
-          </div>
-          <div className="ml-3">
-            <h4 className="font-medium text-gray-900 dark:text-white text-sm">{author}</h4>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-const experiences = [
+const EXPERIENCES = [
   {
     id: 1,
     rating: 5,
-    content: "Our family vacation to Bali was absolutely magical! The curated experiences exceeded all our expectations.",
+    content: "TravelX curated our vacation in Bali down to the finest detail. The infinity villa and private tour made it magical.",
     author: "Jennifer Wilson",
+    role: "Verified Traveler",
     destination: "Bali, Indonesia",
-    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    avatar: "J"
   },
   {
     id: 2,
     rating: 5,
-    content: "The Swiss Alps tour was the adventure of a lifetime! Every detail was perfectly planned.",
-    author: "Mark Thompson",
-    destination: "Swiss Alps",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    content: "The Swiss Alps tour was beyond expectations. Flawless transfers, great lodge, and breathtaking views!",
+    author: "David Vance",
+    role: "Adventure Traveler",
+    destination: "Zermatt, Switzerland",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    avatar: "D"
   },
   {
     id: 3,
     rating: 5,
-    content: "Santorini exceeded all our honeymoon dreams! The sunset cruise and private wine tasting were unforgettable.",
-    author: "Sarah & Michael",
+    content: "Sailing around Santorini on a private boat was unforgettable. Customer service was helpful 24/7.",
+    author: "Sophia Martinez",
+    role: "Travel Enthusiast",
     destination: "Santorini, Greece",
-    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    image: "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    avatar: "S"
   },
   {
     id: 4,
     rating: 5,
-    content: "Our cultural tour through Japan was incredibly enriching. From ancient temples to bustling streets.",
-    author: "David Chen",
-    destination: "Japan",
-    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+    content: "Our cultural tour through Japan was seamlessly organized. From tea ceremonies to bullet train passes!",
+    author: "Alexander Chen",
+    role: "Family Traveler",
+    destination: "Kyoto, Japan",
+    image: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    avatar: "A"
   },
 ];
 
 export default function ExperienceTestimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying] = useState(true);
-
-  useEffect(() => {
-    let interval;
-    if (isAutoPlaying) {
-      interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % experiences.length);
-      }, 5000);
-    }
-    return () => clearInterval(interval);
-  }, [isAutoPlaying]);
-
-  const next = () => setCurrentIndex((prev) => (prev + 1) % experiences.length);
-  const prev = () => setCurrentIndex((prev) => (prev - 1 + experiences.length) % experiences.length);
-  const goTo = (index) => setCurrentIndex(index);
-
   return (
-    <section id="experiences" className="py-12 md:py-20 px-4 bg-gradient-to-b from-blue-50/30 to-white dark:from-gray-900 dark:to-gray-800">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-100 mb-4">
-            <Globe size={14} className="mr-1" />
-            Traveler Stories
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600 dark:from-blue-400 dark:to-green-400 mb-3">
-            Travel Experiences That Inspire
+    <section id="experiences" className="py-20 md:py-28 bg-slate-900 border-b border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-3xl mx-auto mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs font-semibold text-emerald-400 mb-4">
+            <Globe size={14} />
+            <span>Traveler Reviews</span>
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+            What Our Travelers Say
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Discover unforgettable journeys from travelers who explored the world with us
+
+          <p className="text-slate-400 text-sm sm:text-base">
+            Read authentic reviews from guests who explored the world with TravelX.
           </p>
         </div>
 
-        {/* Experience Grid - Desktop */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {experiences.map((exp) => (
-            <ExperienceCard key={exp.id} {...exp} />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {EXPERIENCES.map((exp) => (
+            <div
+              key={exp.id}
+              className="bg-slate-800/90 rounded-xl p-5 border border-slate-700 flex flex-col justify-between"
+            >
+              <div>
+                <div className="relative h-36 rounded-lg overflow-hidden mb-4">
+                  <img
+                    src={exp.image}
+                    alt={exp.destination}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-2 left-2 flex items-center gap-1 bg-slate-950/80 px-2 py-0.5 rounded text-[11px] font-medium text-emerald-400 border border-slate-700">
+                    <MapPin size={12} />
+                    <span>{exp.destination}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1 mb-2">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      size={14}
+                      className="fill-amber-400 text-amber-400"
+                    />
+                  ))}
+                </div>
+
+                <p className="text-slate-300 text-xs leading-relaxed mb-4 italic">
+                  &ldquo;{exp.content}&rdquo;
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-slate-700/80 flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-xs">
+                  {exp.avatar}
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-xs flex items-center gap-1">
+                    <span>{exp.author}</span>
+                    <CheckCircle2 size={12} className="text-emerald-400" />
+                  </h4>
+                  <p className="text-slate-400 text-[10px]">{exp.role}</p>
+                </div>
+              </div>
+            </div>
           ))}
         </div>
       </div>
