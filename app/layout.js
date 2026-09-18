@@ -9,8 +9,23 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark scroll-smooth">
-      <body className="bg-[#0B0F19] text-slate-100 antialiased selection:bg-emerald-500 selection:text-white">
+    <html lang="en" className="dark scroll-smooth" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preconnect"
+          href="https://fonts.googleapis.com"
+        />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="bg-[#0f172a] text-slate-100 antialiased" suppressHydrationWarning>
         <Header />
         <main className="relative overflow-hidden">
           {children}
