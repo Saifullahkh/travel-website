@@ -1,0 +1,6 @@
+# Auto handle text line endings across Windows and Unix environments
+* text=auto
+*.js text eol=lf
+*.json text eol=lf
+*.css text eol=lf
+*.md text eol=lf
